@@ -1,9 +1,5 @@
 #!/bin/sh
 
-if [ ! -f /app/database/database.sqlite ]; then
-    touch /app/database/database.sqlite
-fi
-
 cd /app
 
 echo "Starting Migration..."

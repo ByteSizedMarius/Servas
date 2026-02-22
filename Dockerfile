@@ -30,13 +30,11 @@ ENV SERVER_NAME=:80
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 RUN install-php-extensions \
-	pdo_mysql \
-	mysqli \
+	pdo_pgsql \
 	opcache \
 	bcmath \
     && apk add --no-cache \
-    mariadb-client \
-    sqlite
+    postgresql-client
 
 COPY . ./
 
@@ -55,5 +53,6 @@ RUN mkdir -p /var/cache/php/opcache && \
     chmod 700 /var/cache/php/opcache
 
 COPY ./docker-entrypoint.sh /
+RUN sed -i 's/\r$//' /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
